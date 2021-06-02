@@ -1,0 +1,16 @@
+check-wercker:
+  box: ubuntu:18.04
+  steps:
+    - install-packages:
+        packages: curl
+
+    - script:
+        cwd: prometheus
+        name: download promtool
+        code: curl -sSL https://github.com/prometheus/prometheus/releases/download/v2.3.2/prometheus-2.3.2.linux-amd64.tar.gz | tar xvz
+
+    - script:
+        cwd: prometheus
+        name: prometheus lint
+        code: prometheus-2.3.2.linux-amd64/promtool check rules rules/*.yml
+
